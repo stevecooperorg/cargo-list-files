@@ -4,8 +4,10 @@ use cargo::Config;
 use std::path::*;
 
 pub fn list_files(cargo_toml_location: &Path) -> Vec<PathBuf> {
+    let cargo_toml_location = std::fs::canonicalize(cargo_toml_location).unwrap();
+
     let config = Config::default().unwrap();
-    let ws = Workspace::new(cargo_toml_location, &config).unwrap();
+    let ws = Workspace::new(&cargo_toml_location, &config).unwrap();
 
     let mut result = vec![];
 
